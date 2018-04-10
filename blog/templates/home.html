@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h3>Blog Posts:</h3>
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="/post/{{ post['slug'] }}">
+        {{ post['title'] }}
+      </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

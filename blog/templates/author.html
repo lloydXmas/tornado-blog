@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ titles[0]['name'] }}{% endblock %}
+{% block content %}
+
+<h2>Blog Titles by {{ titles[0]['name'] }}:</h2>
+<br/>
+<div class="author">
+  {% for title in titles %}
+  <p>{{ title['title'] }}</p>
+  {% endfor %}
+
+</div>
+{% endblock %}

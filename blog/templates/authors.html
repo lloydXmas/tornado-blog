@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Authors{% endblock %}
+{% block content %}
+<h1>Authors</h1>
+
+<ul class="list-group list-group-flush">
+  {% for author in authors %}
+  <li class="list-group-item">
+    <a href="/author/{{ author['id'] }}">
+     {{ author['name'] }}
+     </a>
+  </li>
+ {% endfor %}
+ </ul>
+{% endblock %}
