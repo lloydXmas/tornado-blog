@@ -29,7 +29,6 @@ class MainHandler(TemplateHandler):
     posts = self.session.query('SELECT * FROM post')
     self.render_template("home.html", {'posts': posts})
 
-
 class AuthorsHandler(TemplateHandler):
     def get (self):
       author = self.session.query('SELECT * FROM author')
@@ -50,24 +49,25 @@ class BlogPostHandler(TemplateHandler):
     posts = self.session.query(
      'SELECT * FROM post WHERE slug = %(slug)s',
       {'slug': slug}
-    )
+    ).items()
     html = markdown2.markdown(posts[0]['body'])
 
     comments = self.session.query(
       'SELECT comment.comment FROM comment JOIN post ON post.id = comment.post_id WHERE slug = %(slug)s',
       {'slug': slug}
-      )
+      ).items()
     for r in comments:
       print (r)
+      
     author = self.session.query(
       'SELECT * FROM author JOIN post ON post.author_id = author.id WHERE post.slug = %(slug)s',
       {'slug': slug}
-      )
+      ).items()
     context = {
       'post': posts[0],
       'html': html,
       'author': author[0],
-      'comments': comments[0]
+      'comments': comments
     }
     self.render_template("post.html", context)
 
@@ -104,7 +104,6 @@ def make_app():
     (r"/static/(.*)", 
       tornado.web.StaticFileHandler, {'path': 'static'}),
   ], autoreload=True)
-
 
 if __name__ == "__main__":
   tornado.log.enable_pretty_logging()
